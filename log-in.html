@@ -324,12 +324,12 @@
       } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
       const firebaseConfig = {
-        apiKey: "AIzaSyCoA8JnIZVOq_cipStyAQAneWXnCSet-LY",
-        authDomain: "slope-visualization-code.firebaseapp.com",
-        projectId: "slope-visualization-code",
-        storageBucket: "slope-visualization-code.appspot.com",
-        messagingSenderId: "187412634627",
-        appId: "1:187412634627:web:0a353536958e0bf5a78236",
+        apiKey: "your-api-key",
+        authDomain: "your-auth-domain",
+        projectId: "your-project-id",
+        storageBucket: "your-storage-bucket",
+        messagingSenderId: "your-messaging-sender-id",
+        appId: "your-app-id",
       };
 
       const app = initializeApp(firebaseConfig);
@@ -340,22 +340,24 @@
       loginButton.addEventListener("click", (e) => {
         var email = document.getElementById("floatingInput").value;
         var password = document.getElementById("floatingPassword").value;
-      });
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
 
-          const dt = new Date();
-          update(ref(database, "users/" + user.uid), {
-            last_login: dt,
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+
+            const dt = new Date();
+            update(ref(database, "users/" + user.uid), {
+              last_login: dt,
+            });
+            alert("user logged in");
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // Handle the error appropriately
           });
-          alert("user logged in");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-        });
+      });
     </script>
 
     <!-- Scripts -->
