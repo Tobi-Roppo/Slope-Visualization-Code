@@ -314,8 +314,8 @@
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
       import {
         getDatabase,
-        set,
         ref,
+        update,
       } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
       import {
         getAuth,
@@ -337,12 +337,20 @@
       const auth = getAuth();
       const loginButton = document.getElementById("login");
 
-      loginButton.addEventListener("click", (e) => {});
+      loginButton.addEventListener("click", (e) => {
+        var email = document.getElementById("floatingInput").value;
+        var password = document.getElementById("floatingPassword").value;
+      });
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          // ...
+
+          const dt = new Date();
+          update(ref(database, "users/" + user.uid), {
+            last_login: dt,
+          });
+          alert("user logged in");
         })
         .catch((error) => {
           const errorCode = error.code;
