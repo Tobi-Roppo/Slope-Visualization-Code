@@ -320,6 +320,7 @@
       import {
         getAuth,
         createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
       } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
       const firebaseConfig = {
@@ -336,24 +337,17 @@
       const auth = getAuth();
       const loginButton = document.getElementById("login");
 
-      loginButton.addEventListener("click", (e) => {
-        e.preventDefault(); // Prevent the form from submitting
-        var email = document.getElementById("emailInput").value; // Assuming you have an input field with the ID "emailInput"
-        var password = document.getElementById("passwordInput").value; // Assuming you have an input field with the ID "passwordInput"
-
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            // User is signed in.
-            const user = userCredential.user;
-            alert("User logged in successfully!");
-            // Add any code to redirect to a different page or perform other actions after login.
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert(errorMessage);
-          });
-      });
+      loginButton.addEventListener("click", (e) => {});
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
     </script>
 
     <!-- Scripts -->
