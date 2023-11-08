@@ -157,7 +157,7 @@
               </p>
 
               <!-- Sign Up Form -->
-              <form>
+              <form id="MainForm">
                 <div class="mb-4 form-floating">
                   <input
                     type="email"
@@ -198,8 +198,8 @@
                   >
                 </div>
                 <button
-                  type="submit"
-                  id="signUp"
+                  type="button"
+      
                   class="form-control-submit-button"
                 >
                   Sign up
@@ -347,33 +347,32 @@
       };
 
       const app = initializeApp(firebaseConfig);
-      const database = getDatabase(app);
-      const auth = getAuth();
-      const signUpButton = document.getElementById("signUp");
+      const database = getDatabase();
+      const auth = getAuth(app);
 
-      signUpButton.addEventListener("click", (e) => {
-        e.preventDefault(); // Prevent the form from submitting
-        var email = document.getElementById("floatingInput").value;
-        var password = document.getElementById("floatingPassword").value;
-        var username = document.getElementById("floatingInput2").value;
+
+      let MainForm = document.getElementById("MainForm");
+      let email = document.getElementById("floatingInput").value;
+      let password = document.getElementById("floatingPassword").value;
+      let username = document.getElementById("floatingInput2").value;
+
+      let RegisterUser = evt => {
+        evt.preventDefault();
 
         createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
+        .then((credentials)=>{
+          console.log(credentials);
+        })
+        .catch((error)=>{
+          alert(error.message);
+          console.log(error.code);
+          console.log(error.message);
+        })
+      }
 
-            set(ref(database, "users/" + user.uid), {
-              username: username,
-              email: email,
-            });
-            alert("user created");
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+      MainForm.addEventListener('submit', RegisterUser);
 
-            alert(errorMessage);
-          });
-      });
+      
     </script>
     <script src="js/bootstrap.min.js"></script>
     <!-- Bootstrap framework -->
